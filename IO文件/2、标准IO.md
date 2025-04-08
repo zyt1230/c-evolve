@@ -1,5 +1,4 @@
 # 一、打开文件：fopen
-
 ```c
 使用的头文件#include<stdio.h>
 FILE* fopen(const char*path,const char*mode)
@@ -40,13 +39,12 @@ int main(int argc, const char *argv[])
     printf("fopen success\n");
     //2、关闭文件
     fclose(fp);
-
+    
     return 0;
 }
 ```
 
 # 二、关闭文件：fclose
-
 ```cpp
        #include <stdio.h>
        int fclose(FILE *fp);
@@ -57,7 +55,6 @@ int main(int argc, const char *argv[])
 ```
 
 # 三、错误码
-
 1> 概念：当内核提供的函数出错后，内核空间会向用户空间反馈一个错误信息，由于错误信息比较多也比较复杂，系统就给每种不同的错误信息起了一个编号，用一个整数表示，这个整数就是错误码
 
 2> 错误码都是大于或等于0的数字：
@@ -171,15 +168,13 @@ int main(int argc, const char *argv[])
     printf("fopen success\n");
     //2、关闭文件
     fclose(fp);
-
+    
     return 0;
 }
 ```
 
 # 四、单字符读写：fputc/fgetc
-
 ## 1、ctags的使用
-
 + 安装ctags
 
 ```cpp
@@ -203,14 +198,13 @@ sudo apt install universal-ctags  #ubuntu
 ---
 
 ## 2、使用fgetc（EOF）和fputc（EOF）
-
 ```plain
        #include <stdio.h>
        int fgetc(FILE *stream);
        功能：从指定文件中读取一个字符数据，并以无符号整数的形式返回
        参数：文件指针
        返回值：成功返回读取的字符对应的无符号整数，失败返回EOF并置位错误码
-
+       
              #include <stdio.h>
        int fputc(int c, FILE *stream);
        功能：将指定的字符c写入到stream指向的文件中
@@ -290,12 +284,12 @@ int main(int argc, const char *argv[]){
 ```
 
 ## 3、diff的使用
-
 diff 文件 文件
 
 比较它们的不同different，不同的内容打印出来
 
 # 五、字符串读写：fgets（NULL）/fputs（EOF）
+
 
 ```cpp
        int fputs(const char *s, FILE *stream);
@@ -303,7 +297,7 @@ diff 文件 文件
        参数1：要被写入的字符串
        参数2：文件指针
        返回值：成功返回本次写入字符的个数，失败返回EOF
-
+       
        char *fgets(char *s, int size, FILE *stream);
        功能：从stream指向的文件中最多读取size-1个字符到s容器中，遇到回车或文件结束，会结束一
 次读取，并且会将回车放入容器，最后自动加上一个字符串结束标识'\0'
@@ -354,7 +348,7 @@ int main(int argc, const char *argv[]){
     char rbuf[123]="";
     size_t len =0;
     while(1){
-
+        
         char* res=fgets(rbuf,sizeof(rbuf),fp);
         if(res==NULL){
             break;//读取结束
@@ -408,15 +402,12 @@ int main(int argc, char const *argv[])
 ```
 
 # 六、关于标准IO缓冲区问题
-
 ## 1、行缓存了解
-
 + 定义：和终端文件相关的缓冲区。
 + 行缓存的大小是1024字节。【满了就刷新】
 + 对应的文件指针：stdin、stdout
 
 ### 1.1、stdout
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
@@ -450,7 +441,6 @@ int main(int argc, char const *argv[])
 + <font style="color:#DF2A3F;">如果缓存区没有被使用时，求出的大小为0，只有被至少使用一次后，缓存区的大小就被分配了</font>。
 
 ### 1.2、stdin
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
@@ -459,9 +449,9 @@ int main(int argc, char const *argv[])
 {
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
-
+    
     printf("行缓存：%ld\n",stdin->_IO_buf_end-stdin->_IO_buf_base);
-
+    
     return 0;
 }
 ```
@@ -479,7 +469,7 @@ int main(int argc, char const *argv[])
 {
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
-
+    
     printf("行缓存：%ld\n",stdin->_IO_buf_end-stdin->_IO_buf_base);
     int num=0;
     cin>>num;
@@ -492,7 +482,6 @@ int main(int argc, char const *argv[])
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743661283795-94ae556f-aea9-4a1f-a225-836b0fc87106.png)
 
 ## 2、全缓存
-
 + 和<font style="color:#DF2A3F;">外界文件</font>相关的缓存区
 + 大小为<font style="color:#DF2A3F;">4096字节</font>
 + 对应的文件指针：fp
@@ -507,7 +496,7 @@ int main(int argc, char const *argv[])
 {
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
-
+    
     printf("行缓存：%ld\n",stdin->_IO_buf_end-stdin->_IO_buf_base);
     int num=0;
     cin>>num;
@@ -532,7 +521,6 @@ int main(int argc, char const *argv[])
 
 
 ## 3、不缓存
-
 + 和标准出错相关的缓存区
 + 大小0字节
 + 对应的文件指针：stderr
@@ -547,7 +535,7 @@ int main(int argc, char const *argv[])
 {
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
     printf("行缓存：%ld\n",stdout->_IO_buf_end-stdout->_IO_buf_base);
-
+    
     printf("行缓存：%ld\n",stdin->_IO_buf_end-stdin->_IO_buf_base);
     int num=0;
     cin>>num;
@@ -566,7 +554,7 @@ int main(int argc, char const *argv[])
     printf("全缓存：%ld\n",fp->_IO_buf_end-fp->_IO_buf_base);
     fclose(fp);
     printf("------不缓存----------\n");
-
+    
     printf("不缓存：%ld\n",stderr->_IO_buf_end-stderr->_IO_buf_base);
     perror("error");
     printf("不缓存：%ld\n",stderr->_IO_buf_end-stderr->_IO_buf_base);
@@ -576,9 +564,7 @@ int main(int argc, char const *argv[])
 ```
 
 ## 4、行缓存区的刷新时机
-
 ### 4.1、缓冲区的时间没到，就不会打印数据
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
@@ -589,7 +575,7 @@ int main(int argc, char const *argv[])
     //error会比hello world先打印出来
     perror("error\n");//在终端打印错误信息
     while(1){//阻塞程序不让进程结束
-
+        
 
     }
     return 0;
@@ -603,44 +589,41 @@ hello world没有到缓存区刷新时机，就不会输出数据
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743663689661-eb513e5f-3b84-40a1-b39d-c82b69cc3ce8.png)
 
 ### 4.2、程序结束会执行刷新缓存区
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
 int main(int argc, char const *argv[])
 {
-
+    
     //2、当程序结束后，会刷新缓存区
     printf("hello world");
-
+    
     return 0;
 }
 ```
 
 ### 4.3、当遇到换行会发生刷新缓存
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
 int main(int argc, char const *argv[])
 {
-
+    
     //2、当程序结束后，会刷新缓存区
     printf("hello world\n");
-
+    
     return 0;
 }
 
 ```
 
 ### 4.4、当输入输出发生切换时，也会刷新缓存
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
 int main(int argc, char const *argv[])
 {
-
+   
     // 4、当输入输出发生切换时，也会刷新缓存
     int num =0;
     printf("请输入>>>");//向标准输出缓存区中写入一组数据，没有换行符
@@ -651,7 +634,6 @@ int main(int argc, char const *argv[])
 ```
 
 ### 4.5、当关闭缓存缓存对应的文件指针时，也会刷新缓存
-
 + 如果程序没结束，没换行，没输入输出切换
 
 ```cpp
@@ -688,7 +670,6 @@ int main(int argc, char const *argv[])
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743664996111-624889f1-0743-4581-9863-edb631da4392.png)
 
 ### 4.6、fflush**<font style="color:rgb(64, 64, 64);">强制刷新缓冲区</font>**<font style="color:rgb(64, 64, 64);"> 的函数（EOF）</font>
-
 + **<font style="color:rgb(64, 64, 64);">作用</font>**<font style="color:rgb(64, 64, 64);">：强制将缓冲区中</font>**<font style="color:rgb(64, 64, 64);">未写入的数据</font>**<font style="color:rgb(64, 64, 64);">立即提交到</font>**<font style="color:rgb(64, 64, 64);">目标设备</font>**<font style="color:rgb(64, 64, 64);">。</font>
 + <font style="color:#DF2A3F;">成功返回 0 ，失败返回 EOF </font><font style="color:rgb(64, 64, 64);">。</font>
 + man fflush会发现
@@ -724,7 +705,6 @@ int main(int argc, char const *argv[])
 ```
 
 ### 4.7、当缓冲区满了后，会刷新缓存，行缓存是1024字节
-
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743684932495-291695ad-fd67-438d-b426-9998c88e5ec2.png)
 
 ```cpp
@@ -750,9 +730,7 @@ int main(int argc, char const *argv[])
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743685050084-a59d4137-c79e-4c4f-8d1f-dd3eda55ce6a.png)
 
 ## 5、全缓存刷新时机
-
 ## 5.1、当缓冲区刷新时机未到时，不会刷新全缓存
-
 + 例子代码
 
 ```cpp
@@ -772,7 +750,7 @@ int main(int argc, char const *argv[])
     //1、当缓冲区刷新时机未到时，不会刷新全缓存
     fputs("hello world",fp);
     while (1);
-
+    
     return 0;
 }
 ```
@@ -780,23 +758,20 @@ int main(int argc, char const *argv[])
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743689646741-6337f259-45f4-4bb5-9d1a-0a86d9be8a30.png)
 
 ## 5.2、换行会刷新
-
 ```cpp
 //2、当换行时
     fputs("hello world\n",fp);
 ```
 
 ## 5.3、程序结束会刷新
-
 ```cpp
 int main(){
-    fputs("helloworld");
+	fputs("helloworld");
     return 0;
 }
 ```
 
 ## 5.4、输入输出发生切换时会刷新
-
 ```cpp
 fputs("hello world",fp);
 fgetc(fp);
@@ -804,7 +779,6 @@ while(1);
 ```
 
 ### 5.5、当关闭缓冲区对应的文件指针时，也会刷新全缓存
-
 ```cpp
 fputs("helloworld",fp);
 fclose(fp);
@@ -812,7 +786,6 @@ while(1);
 ```
 
 ### 5.6、fflush（EOF）
-
 ```cpp
 fputs("helloworld",fp);
 fflush(fp);
@@ -820,7 +793,6 @@ while(1);
 ```
 
 ### 5.7、当缓存区满了后，再向缓冲区中存放数据会刷新全缓存
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
@@ -838,14 +810,13 @@ int main(int argc, char const *argv[])
     for(int i=0;i<4096;i++){
         fputc('c',fp);
     }
-    while(1);//4096就可以打印出来，但是4095就不行了
+	while(1);//4096就可以打印出来，但是4095就不行了
     return 0;
 }
 
 ```
 
 ## 6、不缓存stderr
-
 ```cpp
 #include<iostream>
 #include<stdio.h>
@@ -863,11 +834,8 @@ int main(int argc, char const *argv[])
 ```
 
 # 七、格式化读写：fprintf/fscanf【外部和终端】
-
 ## 1、fprintf（-1EOF）
-
 ### 1.1、了解
-
 + 功能：**向指定的文件中输出一个格式串**
 + **参数1：****<font style="color:#DF2A3F;">文件指针</font>**
 + **参数2：****<font style="color:#DF2A3F;">格式串，</font>****可以包含格式控制符，例如：%d、%lf等等 。**
@@ -875,7 +843,6 @@ int main(int argc, char const *argv[])
 + **返回值：成功返回是输出的字符个数，失败是 -1** EOF。
 
 ### 1.2、终端
-
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743697473317-00dfeea1-3f02-41aa-8fb4-cd07960346bf.png)
 
 ```cpp
@@ -892,7 +859,6 @@ int main(int argc, char const *argv[])
 ```
 
 ### 1.3、外部文件
-
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743698426140-1997a6b2-afe7-4ec1-8d62-102d89b97f15.png)
 
 ```cpp
@@ -919,9 +885,7 @@ int main(int argc, char const *argv[])
 ```
 
 ## 2、fscanf（EOF）
-
 ### 2.1、了解
-
 + 功能：**向指定的文件中输入一个格式串**
 + **参数1：****<font style="color:#DF2A3F;">文件指针</font>**
 + **参数2：****<font style="color:#DF2A3F;">格式串</font>****，可以包含格式控制符，例如：%d、%lf等等 。**
@@ -929,7 +893,6 @@ int main(int argc, char const *argv[])
 + **返回值：****<font style="color:rgb(51,51,51);">成功返回读入的项数，失败返回EOF并置位错误码</font>**。
 
 ### 2.2、终端
-
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743697630234-f7dc3174-5222-4146-9627-d7c0e92cff94.png)
 
 ```cpp
@@ -951,7 +914,6 @@ int main(int argc, char const *argv[])
 ```
 
 ### 2.3、外部文件
-
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743698467362-a2b4e077-3a47-49ff-8c7a-327444c5d0a8.png)
 
 ```cpp
@@ -978,7 +940,6 @@ int main(int argc, char const *argv[])
 ```
 
 ## 3、练习
-
 + <font style="color:rgb(51,51,51);">使用fprintf和fscanf完成注册和登录功能，要求做个小菜单，三个功能，功能1是注册，用户输入账号和 密码后，将其存放到外部文件中；功能2是登录，用户输入登录账号和密码后，如果跟文件中匹配，则 提示登陆成功，如果全部不匹配，则提示登录失败；功能0，表示退出。菜单可以循环调用</font>
 
 ```cpp
@@ -1062,17 +1023,17 @@ int main(int argc,const char* argv[])
         scanf("%d",&menu);
         getchar();//getchar吸收一下回车
         switch(menu){
-        case 1:
-            //注册
-            do_register();
-            break;
-        case 2:
-            //登录
-            int res;
+		case 1:
+			//注册
+			do_register();
+			break;
+		case 2:
+			//登录
+			int res;
             res=do_login();
-            if(res==1){
-                printf("登录成功后的界面\n");
-            }
+			if(res==1){
+				printf("登录成功后的界面\n");
+			}
             break;
         case 0:
             exit(EXIT_SUCCESS);
@@ -1080,16 +1041,14 @@ int main(int argc,const char* argv[])
             printf("重新登录\n");
         }
         printf("请按回车清屏");
-        while(getchar() != '\n');
-    }
+	    while(getchar() != '\n');
+	}
     return -1;
 }
 ```
 
 # 八、格式串转字符串存入字符数组中：sprintf（EOF）/snprintf（EOF）
-
 ## 1、了解
-
 ```cpp
        int sprintf(char *str, const char *format, ...);
        功能：将指定的格式串转换为字符串，放入字符数组中
@@ -1097,10 +1056,10 @@ int main(int argc,const char* argv[])
        参数2：格式串，可以包含多个格式控制符
        参数3：可变参数
        返回值：成功返回转换的字符个数，失败返回EOF
-
+       
        对于上述函数而言，用一个小的容器去存储一个大的转换后的字符时，会出现指针越界的段错误，为
 了安全起见，引入了snprintf
-
+       
        int snprintf(char *str, size_t size, const char *format, ...);
        功能：将格式串中最多size-1个字符转换为字符串，存放到字符数组中
        参数1：字符数组的起始地址
@@ -1113,7 +1072,6 @@ size-1个字符，返回值就是size，失败返回EOF
 ```
 
 ## 2、sprintf
-
 + 如果字符容器小了，会越界 ，例如：
 
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743758946523-9d8bc64d-1b41-4a8b-ba0f-c4ccb31a5b36.png)
@@ -1134,7 +1092,6 @@ int main(int argc, char const *argv[])
 ```
 
 ## 3、snprintf
-
 + 例子
 
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743759395948-1c3fa259-fcd8-45c5-8732-786d324a5519.png)
@@ -1155,9 +1112,7 @@ int main(int argc, char const *argv[])
 ```
 
 # 九、模块化读写 （fread/fwrite）
-
 # 1、了解
-
 <details class="lake-collapse"><summary id="u6654c8f0"><span class="ne-text">了解</span></summary><p id="u9119bf64" class="ne-p"><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,255)">fread</span><span class="ne-text" style="color: rgb(51,51,51)">(</span><span class="ne-text" style="color: rgb(0,136,85)">void </span><span class="ne-text" style="color: rgb(0,0,0)">ptr</span><em><span class="ne-text" style="color: rgb(51,51,51)">, </span></em><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">size</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">n</span><em><span class="ne-text" style="color: rgb(0,0,0)"> </span></em><span class="ne-text" style="color: rgb(0,0,0)">memb</span><em><span class="ne-text" style="color: rgb(51,51,51)">, </span></em><span class="ne-text" style="color: rgb(0,0,0)">FILE</span><span class="ne-text" style="color: rgb(152,26,26)"> </span><span class="ne-text" style="color: rgb(0,0,0)">stream</span><span class="ne-text" style="color: rgb(51,51,51)">);       </span></p><p id="u05a50c40" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">功能：从stream指向的文件中，读取nmemb项数据，每一项的大小为size，将整个结果放入ptr指 向的容器中 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u0c13453f" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数1：容器指针，是一个void</span><span class="ne-text" style="color: rgb(152,26,26)">*</span><span class="ne-text" style="color: rgb(0,0,0)">类型，表示可以存储任意类型的数据 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u961c973b" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数2：要读取数据每一项的大小 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ua72d16a0" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数3：要读取数据的项数 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u887145b0" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数4：文件指针 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="uf445e49a" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">返回值：成功返回nmemb</span><span class="ne-text" style="color: rgb(51,51,51)">,</span><span class="ne-text" style="color: rgb(0,0,0)">就是成功读取的项数，失败返回小于项数的值，或者是0</span></p><p id="u57eb9f8b" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)"></span></p><p id="u66878d6f" class="ne-p"><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,255)">fwrite</span><span class="ne-text" style="color: rgb(51,51,51)">(</span><span class="ne-text" style="color: rgb(119,0,136)">const </span><span class="ne-text" style="color: rgb(0,136,85)">void* </span><span class="ne-text" style="color: rgb(0,0,0)">ptr</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">size</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">nmemb</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,0,0)">FILE</span><span class="ne-text" style="color: rgb(152,26,26)">* </span><span class="ne-text" style="color: rgb(0,0,0)">stream</span><span class="ne-text" style="color: rgb(51,51,51)">);       </span></p><p id="u63644a52" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">功能：向stream指向的文件中写入nmemb项数据，每一项的大小为size，数据的起始地址为ptr</span></p><p id="u797a9a7e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">。</span><strong><span class="ne-text" style="color: #DF2A3F">但是它最终读取到的不一定是字符串。就可以配合使用fwrite</span></strong><span class="ne-text" style="color: rgb(0,0,0)">。</span></p><p id="u5c8467a2" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数1：要写入数据的起始地址 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u303db50a" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数2：每一项的大小 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ub425df9e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数3：要写入的总项数 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u60d39d6e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数4：文件指针 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ueb8371f3" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">返回值：成功返回写入的项数，失败返回小于项数的值，或者是0</span></p></details>
 # 2、fwrite和换行处理
 ```cpp
@@ -1179,7 +1134,7 @@ int main(int argc, char const *argv[])
         printf("请输入>>>");
         fgets(wbuf,sizeof(wbuf),stdin);//从标准输入中读取数据
         wbuf[strlen(wbuf)-1]='\0';
-
+        
         //判断输入是否为quit
         if(strcmp(wbuf,"quit")==0){
             break;
@@ -1191,12 +1146,10 @@ int main(int argc, char const *argv[])
         fflush(fp);
         printf("录入成功\n");
     }
-    
+
     fclose(fp);
     return 0;
-
 }
-
 ```
 
 + **<font style="color:#DF2A3F;">因为wbuf的最后是 \n字符，如果处理成 \0(wbuf[strlen-1]='\0')就没有换行了。就需要手动添加换行符 </font>**
@@ -1221,7 +1174,7 @@ int main(int argc, char const *argv[])
         printf("请输入>>>");
         fgets(wbuf,sizeof(wbuf),stdin);//从标准输入中读取数据
         //wbuf[strlen(wbuf)-1]='\0';
-
+        
         //判断输入是否为quit
         if(strcmp(wbuf,"quit\n")==0){
             break;
@@ -1242,7 +1195,6 @@ int main(int argc, char const *argv[])
 ```
 
 # 3、fread处理（重点，颠覆认知）
-
 + **<font style="color:#DF2A3F;">fread的读取与换行\n 无关【会读取换行】。而且可能是二进制类型的内容。用fwrite读取</font>**。
 
 ```cpp
@@ -1264,7 +1216,7 @@ int main(int argc, char const *argv[])
         printf("请输入>>>");
         fgets(wbuf,sizeof(wbuf),stdin);//从标准输入中读取数据
         //wbuf[strlen(wbuf)-1]='\0';
-
+        
         //判断输入是否为quit
         if(strcmp(wbuf,"quit\n")==0){
             break;
@@ -1288,7 +1240,7 @@ int main(int argc, char const *argv[])
     int res=fread(rbuf,1,sizeof(rbuf),fp);
     fwrite(rbuf,1,res,stdout);//向标准输出中写入数据
     fclose(fp);
-
+    
     return 0;
 }
 
@@ -1297,7 +1249,6 @@ int main(int argc, char const *argv[])
 ![](https://cdn.nlark.com/yuque/0/2025/png/40383045/1743783343113-0dc9540d-076e-49c1-b157-7d8d0e98d01b.png)
 
 # 3、整数的读写【重点】
-
 + **<font style="color:#DF2A3F;">可以用于整数读取，二进制文件内容</font>**
 
 ```cpp
@@ -1338,7 +1289,6 @@ int main(int argc, char const *argv[])
 ```
 
 # 4、结构体的读写【重点】
-
 + 可以用于结构体struct或class都行
 
 ```cpp
@@ -1379,13 +1329,12 @@ int main(int argc, char const *argv[])
     fread(&temp,sizeof(Stu),1,fp);
     printf("name:%s ,age:%d,score:%.2lf\n",temp.name,temp.age,temp.score);
     fclose(fp);
-
+    
     return 0;
 }
 ```
 
 # 十、关于文件光标：fseek(-1错误码)/ftell（-1错误码）/rewind（无）
-
 ```cpp
        int fseek(FILE *stream, long offset, int whence);
        功能：移动文件光标位置，将光标从指定位置处进行前后偏移
@@ -1452,7 +1401,7 @@ int main(int argc, char const *argv[])
     fread(&temp,sizeof(Stu),1,fp);
     printf("name:%s ,age:%d,score:%.2lf\n",temp.name,temp.age,temp.score);
     fclose(fp);
-
+    
     return 0;
 }
 ```
@@ -1487,7 +1436,7 @@ int main(int argc, char const *argv[])
         {"王五",16,95}
     };
     fwrite(s,sizeof(Stu),3,fp);
-
+    
     //将光标移动到开头位置
     //fseek(fp,0,SEEK_SET);
     //将光标直接定位到第2个学生信息前，但是此时光标在最后
@@ -1500,7 +1449,8 @@ int main(int argc, char const *argv[])
     fread(&temp,sizeof(Stu),1,fp);
     printf("name:%s ,age:%d,score:%.2lf\n",temp.name,temp.age,temp.score);
     fclose(fp);
-
+    
     return 0;
 }
 ```
+
