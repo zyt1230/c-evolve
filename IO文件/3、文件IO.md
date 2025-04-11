@@ -281,7 +281,39 @@ int main(int argc,const char* argv[])
 
 <details class="lake-collapse"><summary id="ub82e2cc6"><span class="ne-text" style="font-size: 16px">步骤</span></summary><p id="u4c9668e1" class="ne-p"><span class="ne-text" style="font-size: 16px">打开cmd 【win+r，在里面输入】</span></p><p id="u07670258" class="ne-p"><span class="ne-text" style="font-size: 16px">scp 要拷贝的路径  l</span><span class="ne-text" style="color: rgb(51,51,51); font-size: 16px">inux下的用户名@ip地址:linux下存放的地址路径</span></p><p id="u0fd0a448" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2025/png/40383045/1743842138613-9e0f932e-0dcc-4987-9028-63704a533843.png" width="1038.6666666666667" id="u3106ec33" class="ne-image"></p><ul class="ne-ul"><li id="u8437f6dc" data-lake-index-type="0"><span class="ne-text">把png改成了bmp</span></li></ul><p id="u19f1b87e" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2025/png/40383045/1743842246445-2599367d-8d5c-4c4e-b266-8076799414bb.png" width="701.3333333333334" id="uc2a17d89" class="ne-image"></p></details>
 ```cpp
-
+#include<myhead.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<unistd.h>
+int main(int argc,const char* argv[])
+{
+    int fd =-1;
+    if((fd=open("./未命名文件.bmp",O_RDWR))==-1){
+        perror("open error");
+        return -1;
+    }
+    //获取文件大小
+    printf("文件大小=%d\n",lseek(fd,0,SEEK_END));
+    //定义变量存储文件大小
+    int pic_size=0;
+    lseek(fd,2,SEEK_SET);//将文件从起始位置向后偏移两个字节，跳过文件类型
+    read(fd,&pic_size,4);//将文件头的3-6字节的内容读取出来
+    printf("pic_size=%d\n",pic_size);//文件的大小
+    //将文件光标向后偏移54字节，跳过文件头和信息头
+    lseek(fd,54,SEEK_SET);
+    //定义像素的颜色，颜色规律是蓝绿红
+    unsigned char color[3]={0,255,0};//定义一个绿色
+    for(int i =0;i<100;i++){//以像素为单位遍历行数,遍历前100行
+        for(int j =0;j<684;j++){//遍历所有列数
+    
+        //此时的 (i,j) 定位的就是一个像素点，是一个三字节为单位的颜色点
+            write(fd,color,sizeof(color));////将当前光标所在位置的像素点变成绿色
+        }
+    }
+    close(fd);
+    return 0;
+}
 ```
 
 # 八、补充知识点

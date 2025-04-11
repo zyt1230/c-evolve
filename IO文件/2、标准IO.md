@@ -1113,7 +1113,27 @@ int main(int argc, char const *argv[])
 
 # 九、模块化读写 （fread/fwrite）
 # 1、了解
-<details class="lake-collapse"><summary id="u6654c8f0"><span class="ne-text">了解</span></summary><p id="u9119bf64" class="ne-p"><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,255)">fread</span><span class="ne-text" style="color: rgb(51,51,51)">(</span><span class="ne-text" style="color: rgb(0,136,85)">void </span><span class="ne-text" style="color: rgb(0,0,0)">ptr</span><em><span class="ne-text" style="color: rgb(51,51,51)">, </span></em><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">size</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">n</span><em><span class="ne-text" style="color: rgb(0,0,0)"> </span></em><span class="ne-text" style="color: rgb(0,0,0)">memb</span><em><span class="ne-text" style="color: rgb(51,51,51)">, </span></em><span class="ne-text" style="color: rgb(0,0,0)">FILE</span><span class="ne-text" style="color: rgb(152,26,26)"> </span><span class="ne-text" style="color: rgb(0,0,0)">stream</span><span class="ne-text" style="color: rgb(51,51,51)">);       </span></p><p id="u05a50c40" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">功能：从stream指向的文件中，读取nmemb项数据，每一项的大小为size，将整个结果放入ptr指 向的容器中 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u0c13453f" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数1：容器指针，是一个void</span><span class="ne-text" style="color: rgb(152,26,26)">*</span><span class="ne-text" style="color: rgb(0,0,0)">类型，表示可以存储任意类型的数据 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u961c973b" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数2：要读取数据每一项的大小 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ua72d16a0" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数3：要读取数据的项数 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u887145b0" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数4：文件指针 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="uf445e49a" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">返回值：成功返回nmemb</span><span class="ne-text" style="color: rgb(51,51,51)">,</span><span class="ne-text" style="color: rgb(0,0,0)">就是成功读取的项数，失败返回小于项数的值，或者是0</span></p><p id="u57eb9f8b" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)"></span></p><p id="u66878d6f" class="ne-p"><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,255)">fwrite</span><span class="ne-text" style="color: rgb(51,51,51)">(</span><span class="ne-text" style="color: rgb(119,0,136)">const </span><span class="ne-text" style="color: rgb(0,136,85)">void* </span><span class="ne-text" style="color: rgb(0,0,0)">ptr</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">size</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,136,85)">size_t </span><span class="ne-text" style="color: rgb(0,0,0)">nmemb</span><span class="ne-text" style="color: rgb(51,51,51)">, </span><span class="ne-text" style="color: rgb(0,0,0)">FILE</span><span class="ne-text" style="color: rgb(152,26,26)">* </span><span class="ne-text" style="color: rgb(0,0,0)">stream</span><span class="ne-text" style="color: rgb(51,51,51)">);       </span></p><p id="u63644a52" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">功能：向stream指向的文件中写入nmemb项数据，每一项的大小为size，数据的起始地址为ptr</span></p><p id="u797a9a7e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">。</span><strong><span class="ne-text" style="color: #DF2A3F">但是它最终读取到的不一定是字符串。就可以配合使用fwrite</span></strong><span class="ne-text" style="color: rgb(0,0,0)">。</span></p><p id="u5c8467a2" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数1：要写入数据的起始地址 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u303db50a" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数2：每一项的大小 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ub425df9e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数3：要写入的总项数 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="u60d39d6e" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">参数4：文件指针 </span><span class="ne-text" style="color: rgb(51,51,51)">       </span></p><p id="ueb8371f3" class="ne-p"><span class="ne-text" style="color: rgb(0,0,0)">返回值：成功返回写入的项数，失败返回小于项数的值，或者是0</span></p></details>
+```cpp
+size_t fread(void ptr, size_t size, size_t n memb, FILE stream);       
+功能：从stream指向的文件中，读取nmemb项数据，每一项的大小为size，将整个结果放入ptr指 向的容器中        
+参数1：容器指针，是一个void*类型，表示可以存储任意类型的数据        
+参数2：要读取数据每一项的大小        
+参数3：要读取数据的项数        
+参数4：文件指针        
+返回值：成功返回nmemb,就是成功读取的项数，失败返回小于项数的值，或者是0
+
+size_t fwrite(const void* ptr, size_t size, size_t nmemb, FILE* stream);       
+功能：向stream指向的文件中写入nmemb项数据，每一项的大小为size，数据的起始地址为ptr
+。但是它最终读取到的不一定是字符串。就可以配合使用fwrite。
+参数1：要写入数据的起始地址        
+参数2：每一项的大小        
+参数3：要写入的总项数        
+参数4：文件指针        
+返回值：成功返回写入的项数，失败返回小于项数的值，或者是0
+```
+
+
+
 # 2、fwrite和换行处理
 ```cpp
 #include<iostream>
