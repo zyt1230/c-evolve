@@ -1,9 +1,10 @@
 # 一、进程间通信方式和引入原因
-+ <font style="color:rgb(51,51,51);">由于</font>**<font style="color:#DF2A3F;">多个进程的用户空间是相互独立的</font>**<font style="color:rgb(51,51,51);">，其栈区、堆区、静态区的数据都是彼此</font>**<font style="color:#DF2A3F;">私有</font>**<font style="color:rgb(51,51,51);">的，所以</font><font style="color:#DF2A3F;">不可 能通过用户空间中的区域完成多个进程之间数据的通信</font><font style="color:rgb(51,51,51);"> </font>
++ <font style="color:rgb(51,51,51);">由于</font>**<font style="color:#DF2A3F;">多个进程的用户空间是相互独立的</font>**<font style="color:rgb(51,51,51);">，其栈区、堆区、静态区的数据都是彼此</font>**<font style="color:#DF2A3F;">私有</font>**<font style="color:rgb(51,51,51);">的，所以</font><font style="color:#DF2A3F;">不可 能通过用户空间中的区域完成多个进程之间数据的通信</font><font style="color:rgb(51,51,51);"> 。</font>
 + <font style="color:#DF2A3F;">可以使用</font>**<font style="color:#DF2A3F;">外部文件</font>**<font style="color:#DF2A3F;">来完成</font>**<font style="color:#DF2A3F;">多个进程之间数据的传递</font>**<font style="color:rgb(51,51,51);">，一个进程向文件中写入数据，另一个进程从文 件中读取数据。</font><font style="color:#DF2A3F;">该方式要必须保证</font>**<font style="color:#DF2A3F;">写进程先执行</font>**<font style="color:#DF2A3F;">，然后</font>**<font style="color:#DF2A3F;">再执行读进程</font>**<font style="color:#DF2A3F;">，要保证进程执行的</font>**<font style="color:#DF2A3F;">同步性</font>**<font style="color:rgb(51,51,51);">  。【一般不用这个】</font>
 + <font style="color:rgb(51,51,51);">我们可以</font>**<font style="color:#DF2A3F;">利用内核空间来完成对数据的通信工作</font>**<font style="color:rgb(51,51,51);">，</font>**<font style="color:#DF2A3F;">本质上</font>**<font style="color:rgb(51,51,51);">，在内核空间创建</font>**<font style="color:rgb(51,51,51);">一个特殊的区域</font>**<font style="color:rgb(51,51,51);">，</font>**<font style="color:#DF2A3F;">一个 进程</font>**<font style="color:rgb(51,51,51);">向该区域中</font>**<font style="color:rgb(51,51,51);">存放数据</font>**<font style="color:rgb(51,51,51);">，</font>**<font style="color:#DF2A3F;">另一个进程</font>**<font style="color:rgb(51,51,51);">可以从该区域中</font>**<font style="color:rgb(51,51,51);">读取数据</font>**<font style="color:rgb(51,51,51);"> 。</font>
 
 ```cpp
+
 #include<unistd.h>
 #include<sys/types.h>
 #include<wait.h>
@@ -16,12 +17,13 @@ int main(int argc,const char* argv[])
     if(pid>0){
         //父进程
         num=1314;
-        printf("父进程中num = %d \n",num);
+        printf("父进程中num = %d \n",num);//1314
         wait(NULL);//等待回收子进程
     }else if(pid ==0){
         //子进程
+        num =1;
         sleep(3);
-        printf("子进程中 = %d\n",num);
+        printf("子进程中 = %d\n",num);//1
      //子进程num在全局还是局部都是520        
     }else{
         strerror(errno);
@@ -185,9 +187,9 @@ int main(int argc,const char* argv[])
 >
 > <font style="color:rgb(51,51,51);">单工：只能进程A向B发送消息 </font>
 >
-> <font style="color:rgb(51,51,51);">半双工：同一时刻只能A向B发消息 </font>
+> <font style="color:rgb(51,51,51);">半双工：</font>**<font style="color:rgb(51,51,51);">同一时刻</font>**<font style="color:rgb(51,51,51);">只能A向B发消息 </font>
 >
-> <font style="color:rgb(51,51,51);">全双工：任意时刻，AB可以互相通信</font>
+> <font style="color:rgb(51,51,51);">全双工：</font>**<font style="color:rgb(51,51,51);">任意时刻</font>**<font style="color:rgb(51,51,51);">，AB可以互相通信</font>
 >
 
 
